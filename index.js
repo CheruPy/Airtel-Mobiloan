@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const phone = document.getElementById("mpesas").value.trim();
           const idNumber = document.getElementById("idNumber").value.trim();
           const loanType = document.getElementById("loanType").value;
-          const selectedCountry = document.getElementById("country").value;
+          const selectedCountry = document.getElementById("district").value;
 
           // Validation and localStorage logic remains the same
           if (!name || !phone || !idNumber || !loanType || !selectedCountry) {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
           localStorage.setItem("phone", phone);
           localStorage.setItem("idNumber", idNumber);
           localStorage.setItem("loanType", loanType);
-          localStorage.setItem("country", selectedCountry);
+          localStorage.setItem("district", selectedCountry);
           localStorage.setItem('visited', 'true');
 
           const loadingOverlay = document.querySelector('.loading-overlay');
