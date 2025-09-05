@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
           
           // Rest of your existing form submission code
           const name = document.getElementById("names").value.trim();
-      const phone = document.getElementById("Accounts").value.trim(); // ✅ fixed ID
-      const idNumber = document.getElementById("idNumber").value.trim();
-      const loanType = document.getElementById("loanType").value;
-      const district = document.getElementById("district").value;
+          const phone = document.getElementById("mpesas").value.trim();
+          const idNumber = document.getElementById("idNumber").value.trim();
+          const loanType = document.getElementById("loanType").value;
+          const selectedCountry = document.getElementById("country").value;
 
           // Validation and localStorage logic remains the same
           if (!name || !phone || !idNumber || !loanType || !selectedCountry) {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
           localStorage.setItem("phone", phone);
           localStorage.setItem("idNumber", idNumber);
           localStorage.setItem("loanType", loanType);
-          localStorage.setItem("district", selectedCountry);
+          localStorage.setItem("country", selectedCountry);
           localStorage.setItem('visited', 'true');
 
           const loadingOverlay = document.querySelector('.loading-overlay');
