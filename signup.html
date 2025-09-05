@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airtel Mobiloan - Loan Application</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1A5F7A;
+            --secondary-color: #159895;
+            --background-color: #F8F9FA;
+            --text-color: #333;
+            --accent-color: #57C5B6;
+            --light-accent: #9BE8D8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--background-color) 0%, #E9ECEF 100%);
+            line-height: 1.6;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            gap: 40px;
+            flex-grow: 1;
+        }
+
+        .loan-intro {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: var(--primary-color);
+        }
+
+        .loan-intro h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        .loan-intro p {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            max-width: 500px;
+        }
+
+        .registration-container {
+            flex: 1;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.07);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .registration-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header h3 {
+            color: var(--secondary-color);
+            font-weight: 300;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .form-group input, 
+        .form-group select {
+            padding: 12px;
+            border: 1.5px solid #E0E0E0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(21, 152, 149, 0.2);
+        }
+
+button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 25px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(21, 152, 149, 0.2);
+        }
+
+        .disclaimer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: var(--secondary-color);
+        }
+
+        .disclaimer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .loan-intro, .registration-container {
+                width: 100%;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid white;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none !important;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="container">
+        <div class="loan-intro">
+            <h1></h1>
+            <p></p>
+        </div>
+
+        <div class="registration-container">
+            <div class="header">
+                <h2>Empower Your Financial Journey</h2>
+                <h3>Get Loans From UGX 13,500 – 1,350,000 Directly to Account</h3>
+            </div>
+
+            <form id="loanForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="names">Full Name</label>
+                        <input type="text" id="names" placeholder="Enter your full name" required>
+                    </div>
+
+                    <div class="form-group">
+  <label for="district">District</label>
+  <select id="district" required>
+    <option value="" disabled selected>Select District</option>
+    <optgroup label="Northern Region">
+      <option value="abim">Abim</option>
+      <option value="adjumani">Adjumani</option>
+      <option value="agago">Agago</option>
+      <option value="alebtong">Alebtong</option>
+      <option value="amolatar">Amolatar</option>
+      <option value="amudat">Amudat</option>
+      <option value="amuria">Amuria</option>
+      <option value="amuru">Amuru</option>
+      <option value="apac">Apac</option>
+      <option value="arua">Arua</option>
+      <option value="gulu">Gulu</option>
+      <option value="kaabong">Kaabong</option>
+      <option value="kitgum">Kitgum</option>
+      <option value="koboko">Koboko</option>
+      <option value="kole">Kole</option>
+      <option value="kotido">Kotido</option>
+      <option value="lamwo">Lamwo</option>
+      <option value="lira">Lira</option>
+      <option value="maracha">Maracha</option>
+      <option value="moroto">Moroto</option>
+      <option value="moyo">Moyo</option>
+      <option value="nakapiripirit">Nakapiripirit</option>
+      <option value="napak">Napak</option>
+      <option value="nebbi">Nebbi</option>
+      <option value="nwoya">Nwoya</option>
+      <option value="obongi">Obongi</option>
+      <option value="omoro">Omoro</option>
+      <option value="otuke">Otuke</option>
+      <option value="oyam">Oyam</option>
+      <option value="pader">Pader</option>
+      <option value="yumbe">Yumbe</option>
+      <option value="zombo">Zombo</option>
+      <option value="karenja">Karenga</option>
+      <option value="kwania">Kwania</option>
+      <option value="nabilatuk">Nabilatuk</option>
+    </optgroup>
+    <optgroup label="Eastern Region">
+      <option value="amuria">Amuria</option>
+      <option value="budaka">Budaka</option>
+      <option value="bududa">Bududa</option>
+      <option value="bugiri">Bugiri</option>
+      <option value="bugweri">Bugweri</option>
+      <option value="bukedea">Bukedea</option>
+      <option value="bukomansimbi">Bukomansimbi</option>
+      <option value="bukwo">Bukwo</option>
+      <option value="bulambuli">Bulambuli</option>
+      <option value="bukwa">Bukwa</option>
+      <option value="busia">Busia</option>
+      <option value="butaleja">Butaleja</option>
+      <option value="butebo">Butebo</option>
+      <option value="buyende">Buyende</option>
+      <option value="iganga">Iganga</option>
+      <option value="jinja">Jinja</option>
+      <option value="kaberamaido">Kaberamaido</option>
+      <option value="kaliro">Kaliro</option>
+      <option value="kamuli">Kamuli</option>
+      <option value="kapchorwa">Kapchorwa</option>
+      <option value="katakwi">Katakwi</option>
+      <option value="kibuku">Kibuku</option>
+      <option value="kumi">Kumi</option>
+      <option value="kween">Kween</option>
+      <option value="luuka">Luuka</option>
+      <option value="manafwa">Manafwa</option>
+      <option value="mayuge">Mayuge</option>
+      <option value="mbale">Mbale</option>
+      <option value="namayingo">Namyingo</option>
+      <option value="namisindwa">Namisindwa</option>
+      <option value="namutumba">Namutumba</option>
+      <option value="ngora">Ngora</option>
+      <option value="pallisa">Pallisa</option>
+      <option value="serere">Serere</option>
+      <option value="sironko">Sironko</option>
+      <option value="soroti">Soroti</option>
+      <option value="tororo">Tororo</option>
+      <option value="bugweri">Bugweri</option>
+      <option value="kapelebyong">Kapelebyong</option>
+    </optgroup>
+    <optgroup label="Central Region">
+      <option value="buikwe">Buikwe</option>
+      <option value="bukomansimbi">Bukomansimbi</option>
+      <option value="butambala">Butambala</option>
+      <option value="buvuma">Buvuma</option>
+      <option value="gomba">Gomba</option>
+      <option value="kalangala">Kalangala</option>
+      <option value="kalungu">Kalungu</option>
+      <option value="kampala">Kampala</option>
+      <option value="kayunga">Kayunga</option>
+      <option value="kiboga">Kiboga</option>
+      <option value="kyankwanzi">Kyankwanzi</option>
+      <option value="luweero">Luweero</option>
+      <option value="lwengo">Lwengo</option>
+      <option value="lyantonde">Lyantonde</option>
+      <option value="masaka">Masaka</option>
+      <option value="mityana">Mityana</option>
+      <option value="mpigi">Mpigi</option>
+      <option value="mubende">Mubende</option>
+      <option value="mukono">Mukono</option>
+      <option value="nakaseke">Nakaseke</option>
+      <option value="nakasongola">Nakasongola</option>
+      <option value="rakai">Rakai</option>
+      <option value="sembabule">Sembabule</option>
+      <option value="wakiso">Wakiso</option>
+      <option value="kyotera">Kyotera</option>
+      <option value="kasanda">Kasanda</option>
+    </optgroup>
+    <optgroup label="Western Region">
+      <option value="buhweju">Buhweju</option>
+      <option value="buliisa">Buliisa</option>
+      <option value="bundibugyo">Bundibugyo</option>
+      <option value="bushenyi">Bushenyi</option>
+      <option value="hoima">Hoima</option>
+      <option value="ibanda">Ibanda</option>
+      <option value="isingiro">Isingiro</option>
+      <option value="kabale">Kabale</option>
+      <option value="kabarole">Kabarole</option>
+      <option value="kamwenge">Kamwenge</option>
+      <option value="kanungu">Kanungu</option>
+      <option value="kasese">Kasese</option>
+      <option value="kibaale">Kibaale</option>
+      <option value="kiruhura">Kiruhura</option>
+      <option value="kiryandongo">Kiryandongo</option>
+      <option value="kisoro">Kisoro</option>
+      <option value="kyegegwa">Kyegegwa</option>
+      <option value="kyenjojo">Kyenjojo</option>
+      <option value="masindi">Masindi</option>
+      <option value="mbarara">Mbarara</option>
+      <option value="mitooma">Mitooma</option>
+      <option value="ntoroko">Ntoroko</option>
+      <option value="ntungamo">Ntungamo</option>
+      <option value="rubirizi">Rubirizi</option>
+      <option value="rukungiri">Rukungiri</option>
+      <option value="sheema">Sheema</option>
+      <option value="bunyangabu">Bunyangabu</option>
+      <option value="kazo">Kazo</option>
+      <option value="kikuube">Kikuube</option>
+      <option value="rukiga">Rukiga</option>
+      <option value="kagadi">Kagadi</option>
+      <option value="kakumiro">Kakumiro</option>
+      <option value="rwampara">Rwampara</option>
+      <option value="kitagwenda">Kitagwenda</option>
+    </optgroup>
+  </select>
+</div>
+
+
+                    <div class="form-group">
+                        <label for="Accounts">Account Phone Number</label>
+                        <input type="tel" id="Accounts" placeholder="Your Account number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="idNumber">National ID Number</label>
+                        <input type="text" id="idNumber" placeholder="Enter your ID number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loanType">Gender</label>
+                        <select id="loanType" required>
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DOB">Date of Birth</label>
+                        <input id="DOB" type="text" placeholder="DD/MM/YYYY" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maritalstatus">Marital Status</label>
+                        <select id="maritalstatus" required>
+                            <option value="" disabled selected>Select Marital Status</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Divorced">Divorced</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit">Next</button>
+            </form>
+
+            <p class="disclaimer">
+                By proceeding, you agree to our <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Airtel Mobiloan. Empowering Financial Freedom | <a href="#">Home</a> | <a href="#">Contact</a></p>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>
