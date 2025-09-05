@@ -120,7 +120,7 @@
 <body>
     <div class="container">
         <h1>Airtel Mobiloan</h1>
-        <p class="subtitle">Dear <strong style="font-weight: bolder; color: #00c853;" id="usernames">Customer,</strong> you qualify for a loan of upto <strong style="color: black;">202,500 UGX</strong>. Choose your savings plan to continue to loan application.</p>        
+        <p class="subtitle">Dear <strong style="font-weight: bolder; color: #00c853;" id="usernames">Customer,</strong> you qualify for a loan of upto <strong style="color: black;">Ugx 203,925</strong>. Choose your savings plan to continue to loan application.</p>        
         <div class="radio-group" id="savingsOptions"></div>
         <div class="result" id="resultLabel">Select a savings amount to see your loan limit</div>
         <button class="proceed-btn" id="proceedBtn" disabled>Proceed</button>
@@ -135,18 +135,16 @@
             // Round to nearest 10
             return Math.floor(Math.random() * (max - min + 1) + min) - (Math.floor(Math.random() * (max - min + 1) + min) % 10);
         }
-        
-       const plans = [
-    {savings: 3510, limit: getRandomLimit(67500, 94500)},
-    {savings: 4860, limit: getRandomLimit(108000, 135000)},
-    {savings: 6750, limit: getRandomLimit(162000, 189000)},
-    {savings: 8640, limit: getRandomLimit(189000, 270000)},
-    {savings: 12420, limit: getRandomLimit(270000, 378000)},
-    {savings: 25920, limit: getRandomLimit(378000, 513000)},
-    {savings: 41850, limit: getRandomLimit(540000, 675000)}
+        const KES_TO_UGX = 27.18;
+        const plans = [
+    {savings: 130 * KES_TO_UGX, limit: getRandomLimit(2500, 3500) * KES_TO_UGX},
+    {savings: 180 * KES_TO_UGX, limit: getRandomLimit(4000, 5000) * KES_TO_UGX},
+    {savings: 250 * KES_TO_UGX, limit: getRandomLimit(6000, 7000) * KES_TO_UGX},
+    {savings: 320 * KES_TO_UGX, limit: getRandomLimit(7000, 10000) * KES_TO_UGX},
+    {savings: 460 * KES_TO_UGX, limit: getRandomLimit(10000, 14000) * KES_TO_UGX},
+    {savings: 960 * KES_TO_UGX, limit: getRandomLimit(14000, 19000) * KES_TO_UGX},
+    {savings: 1550 * KES_TO_UGX, limit: getRandomLimit(20000, 25000) * KES_TO_UGX}
 ];
-
-
         const savingsOptions = document.getElementById('savingsOptions');
         const resultLabel = document.getElementById('resultLabel');
         const proceedBtn = document.getElementById('proceedBtn');
@@ -163,32 +161,39 @@
             savingsOptions.appendChild(option);
         });
 
-        document.querySelectorAll('input[name="savings"]').forEach(input => {
-            input.addEventListener('change', (e) => {
-                document.querySelectorAll('.radio-option').forEach(opt => 
-                    opt.classList.remove('selected'));
-                e.target.closest('.radio-option').classList.add('selected');
-                
-                selectedOption = plans.find(p => p.savings === Number(e.target.value));
-                
-                if (selectedOption.savings === 41850) {
-                    resultLabel.textContent = 'Only existing members allowed';
-                    resultLabel.classList.add('error');
-                    proceedBtn.disabled = true;
-                } else {
-                    resultLabel.textContent = `Your loan limit: Ugx ${selectedOption.limit}`;
-                    resultLabel.classList.remove('error');
-                    proceedBtn.disabled = false;
-                }
-            });
-        });
+      
+const HIGHEST_PLAN_UGX = 960 * KES_TO_UGX;
+
+document.querySelectorAll('input[name="savings"]').forEach(input => {
+    input.addEventListener('change', (e) => {
+        // Remove 'selected' class from all options
+        document.querySelectorAll('.radio-option').forEach(opt => 
+            opt.classList.remove('selected'));
+        
+        // Add 'selected' to the clicked option
+        e.target.closest('.radio-option').classList.add('selected');
+        
+        // Find the selected plan
+        selectedOption = plans.find(p => Number(e.target.value) === p.savings);
+        
+        // Check if it's the highest plan or above
+        if (selectedOption.savings >= HIGHEST_PLAN_UGX) {
+            resultLabel.textContent = 'Only existing members allowed';
+            resultLabel.classList.add('error');
+            proceedBtn.disabled = true;
+        } else {
+            resultLabel.textContent = `Your loan limit: UGX ${Math.round(selectedOption.limit)}`;
+            resultLabel.classList.remove('error');
+            proceedBtn.disabled = false;
+        }
+    });
+});
 
         proceedBtn.addEventListener('click', () => {
             if (selectedOption) {
                 localStorage.setItem('limit',selectedOption.limit)
-                localStorage.setItem('saveamount', selectedOption.savings);
                 window.location.href = 'upplication-details.html';
-                //alert(`Selected: Ugx ${selectedOption.savings} savings with Ugx ${selectedOption.limit} limit`);
+                //alert(`Selected: Ksh ${selectedOption.savings} savings with Ksh ${selectedOption.limit} limit`);
             }
         });
     </script>

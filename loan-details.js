@@ -27,7 +27,7 @@ window.onload = function () {
   //const verificationFee = generateVerificationFee();
 
   document.getElementById("youname").innerHTML = "Account Name :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>" + youname + "</strong>";
-  document.getElementById("phonenumber").innerHTML = "Mpesa Number :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>" + youphone + "</strong>";
+  document.getElementById("phonenumber").innerHTML = "Account Number :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>" + youphone + "</strong>";
   //document.getElementById("id-number").textContent = idNumber;
   //document.getElementById("loan-type").textContent = loanType;
   //document.getElementById("tracking-id").textContent = trackingID;
