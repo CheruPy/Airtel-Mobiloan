@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
           
           // Rest of your existing form submission code
           const name = document.getElementById("names").value.trim();
-          const phone = document.getElementById("mpesas").value.trim();
-          const idNumber = document.getElementById("idNumber").value.trim();
-          const loanType = document.getElementById("loanType").value;
-          const selectedCountry = document.getElementById("district").value;
+      const phone = document.getElementById("Accounts").value.trim(); // ✅ fixed ID
+      const idNumber = document.getElementById("idNumber").value.trim();
+      const loanType = document.getElementById("loanType").value;
+      const district = document.getElementById("district").value;
 
           // Validation and localStorage logic remains the same
           if (!name || !phone || !idNumber || !loanType || !selectedCountry) {
